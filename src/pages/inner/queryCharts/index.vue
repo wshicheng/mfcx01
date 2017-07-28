@@ -1,7 +1,7 @@
 <template>
   <div class="queryCharts">
     <el-row class="watchLists">
-      <button class="btn_list" @click="handleClick">查看列表</button>
+      <button class="btn_list" @click="handleClick">查看统计图</button>
     </el-row>
     <el-row class="watchButton">
       <el-col :span="2">
@@ -23,7 +23,8 @@ div.queryCharts {
   width: 100%;
   box-sizing: border-box;
   height: 800px;
-  padding: 20px;
+  box-sizing: border-box;
+    padding: 20px 30px 20px 30px;
 }
 
 div.queryCharts table {
@@ -52,7 +53,6 @@ div.queryCharts div.chartsRect {
 }
 
 div.queryCharts div.watchLists {
-  line-height: 40px;
   height: 40px;
   text-align: right;
 }
