@@ -401,6 +401,7 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             this.loading2 = false
@@ -466,6 +467,7 @@ export default {
             'userId': 'admin',
             'id': id
           })
+          .withCredentials()
           .end((err, res) => {
             if (err) {
               console.log('err:' + err)
@@ -536,6 +538,7 @@ export default {
             'bikeNum': newAccountInfo.cars,
             'id': this.thisOpenId
           })
+          .withCredentials()
           .end((err, res) => {
             if (err) {
               console.log('err:' + err)
@@ -573,6 +576,7 @@ export default {
               'symbol': this.value?this.value:null,
               'num': this.search_Number?this.search_Number:0
             })
+            .withCredentials()
             .end((err, res) => {
               if (err) {
                 console.log('err:' + err)
@@ -618,6 +622,7 @@ export default {
                 'franchiseeId': '123456',
                 'userId': 'admin'
               })
+              .withCredentials()
               .end((err, res) => {
                 if (err) {
                   console.log('err:' + err)
@@ -651,6 +656,7 @@ export default {
               'symbol': this.value?this.value:null,
               'num': this.search_Number?this.search_Number:0
             })
+            .withCredentials()
             .end((err, res) => {
               if (err) {
                 console.log('err:' + err)

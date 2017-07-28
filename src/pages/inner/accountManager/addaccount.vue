@@ -251,6 +251,7 @@ export default {
                 password: this.ruleForm.password
               }
             })
+          .withCredentials()
           .end( (err, res)=>{
             if (err) {
               console.log(err)

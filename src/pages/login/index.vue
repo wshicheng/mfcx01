@@ -161,6 +161,7 @@ export default {
           .send({
             phoneNo: this.findForm.tel
           })
+          .withCredentials()
           .end(function (error, res) {
             if (error) {
               console.log(error)
@@ -192,6 +193,7 @@ export default {
                   .send({
                     mobileNo: that.findForm.tel
                   })
+                  .withCredentials()
                   .end(function (err, res) {
                     if (err) {
                       console.log(err)
@@ -226,6 +228,7 @@ export default {
             'name': this.formLabelAlign.username,
             'password': this.formLabelAlign.password
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -264,6 +267,7 @@ export default {
               phoneNo: that.findForm.tel,
               verCode: that.findForm.verificationCode
             })
+            .withCredentials()
             .end(function (error, res) {
               if (error) {
                 console.log(error)
@@ -296,6 +300,7 @@ export default {
             .send({
               password: that.resetForm.pass
             })
+            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)

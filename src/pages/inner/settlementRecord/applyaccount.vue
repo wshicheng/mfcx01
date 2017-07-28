@@ -132,6 +132,7 @@ export default {
           'userId': 'admin',
           'withdrawalCode': this.currentCode
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -187,6 +188,7 @@ export default {
             'userId': 'admin',
             'withdrawalCode': that.currentCode
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -212,6 +214,7 @@ export default {
         'franchiseeId': '123456',
         'userId': 'admin'
       })
+      .withCredentials()
       .end((err, res) => {
         if (err) {
           console.log('err:' + err)
@@ -292,6 +295,7 @@ export default {
                   'money': $('#apply_money').val(),
                   'withdrawalCode': that.currentCode
                 })
+                .withCredentials()
                 .end((error, res) => {
                   instance.confirmButtonLoading = true
                   instance.confirmButtonText = '申请提交中...'

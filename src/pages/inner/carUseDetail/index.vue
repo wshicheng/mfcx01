@@ -170,6 +170,7 @@ export default {
           'userId': 'admin',
           'code': this.$route.query.code
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)

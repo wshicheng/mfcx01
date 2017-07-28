@@ -255,6 +255,7 @@ export default {
                   'email': this.ruleForm.email,
                   'address': this.ruleForm.address
                 })
+                .withCredentials()
                 .end((err, res) => {
                   if (err) {
                     console.log('err:' + err)

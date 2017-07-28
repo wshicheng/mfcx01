@@ -149,6 +149,7 @@ export default {
             state:this.checkList.length>0?this.checkList:null,
             name:this.terminalNumber?this.terminalNumber:null
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -180,6 +181,7 @@ export default {
               state:this.checkList.length>0?this.checkList:null,
               name:this.terminalNumber?this.terminalNumber:null
             })
+            .withCredentials()
             .end((error, res) => {
               if (error) {
                 this.loading2  = false
@@ -240,6 +242,7 @@ export default {
                 state:that.checkList.length>0?that.checkList:null,
                 name:that.terminalNumber
               })
+              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   this.loading2  = false
@@ -278,6 +281,7 @@ export default {
                   state:that.checkList.length>0?that.checkList:null,
                   name:that.terminalNumber
                 })
+                .withCredentials()
                 .end((error, res) => {
                   if (error) {
                     this.loading2  = false
@@ -392,6 +396,7 @@ export default {
           state:this.checkList.length>0?this.checkList:null,
           name:this.terminalNumber?this.terminalNumber:null
         })
+        .withCredentials()
         .end((error, res) => {
           if (error) {
             this.loading2  = false
@@ -437,6 +442,7 @@ export default {
                 state:this.checkList.length>0?this.checkList:null,
                 name:this.terminalNumber?this.terminalNumber:null
               })
+              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)
@@ -463,6 +469,7 @@ export default {
                 state:this.checkList.length>0?this.checkList:null,
                 name:this.terminalNumber?this.terminalNumber:null
               })
+              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)

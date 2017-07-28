@@ -109,6 +109,7 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
         franchiseeId: '123456',
         userId: 'jjjj'
       })
+      .withCredentials()
       .end(function(err, res){
         if (err) {
           console.log(err)
@@ -177,6 +178,7 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
               franchiseeId: '123456',
               userId: 'jjjj'
             })
+            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
@@ -230,6 +232,7 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
               .send({
                 list: this.msgList
               })
+              .withCredentials()
               .end(function(error,res){
                 if(error) {
                   console.log(error)
@@ -252,6 +255,7 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
           .send({
             list: newArr
           })
+          .withCredentials()
           .end(function(error,res){
             if(error) {
               console.log(error)

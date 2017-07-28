@@ -365,6 +365,7 @@ export default {
         'franchiseeId': '123456',
         'userId': 'admin'
       })
+      .withCredentials()
       .end((err, res) => {
         if (err) {
           this.loading2 = false
@@ -483,6 +484,7 @@ export default {
                 'startTime': startTime,
                 'endTime': endTime
               })
+              .withCredentials()
               .end((err, res) => {
                 if (err) {
                   console.log('err:' + err)
@@ -546,6 +548,7 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -579,6 +582,7 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -612,6 +616,7 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -663,6 +668,7 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -690,6 +696,7 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               this.loading2 = false
@@ -735,6 +742,7 @@ export default {
             'startTime': startTime,
             'endTime': endTime
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -774,6 +782,7 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)

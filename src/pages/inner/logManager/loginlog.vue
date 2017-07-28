@@ -215,6 +215,7 @@
             franchiseeId: '123456',
             userId: 'jjjj'
           })
+          .withCredentials()
           .end(function(err, res){
             if (err) {
               console.log(err)
@@ -278,6 +279,7 @@
             franchiseeId: '123456',
             userId: 'jjjj'
           })
+          .withCredentials()
           .end(function(err, res){
             if (err) {
               console.log(err)
@@ -346,6 +348,7 @@
           franchiseeId: '123456',
           userId: 'jjjj'
         })
+        .withCredentials()
         .end(function(err, res){
           if (err) {
             console.log(err)
@@ -421,6 +424,7 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
+            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
@@ -439,6 +443,7 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
+            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
@@ -457,6 +462,7 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
+            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)

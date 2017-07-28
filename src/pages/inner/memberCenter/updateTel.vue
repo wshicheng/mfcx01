@@ -217,6 +217,7 @@ export default {
             .send({
               mobileNo: this.ruleForm.tel
             })
+            .withCredentials()
             .end(function(err,res){
               if(err) {
                 console.log(err)
@@ -244,6 +245,7 @@ export default {
                   verCode: that.ruleForm.verCode,
                   pwd: that.ruleForm.account_password
               })
+              .withCredentials()
               .end((err, res) => {
                 if (err) {
                   console.log(err)

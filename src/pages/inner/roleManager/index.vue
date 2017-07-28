@@ -354,6 +354,7 @@ export default {
         var that = this
         request
         .post(host + 'franchisee/account/getRole')
+        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log(err)
@@ -395,6 +396,7 @@ export default {
           .send({
             roleName: this.roleName.trim()
           })
+          .withCredentials()
           .end(function(error,res){
             if(error){
               console.log(error)
@@ -461,6 +463,7 @@ export default {
             auths: authList
           }
         })
+        .withCredentials()
         .end(function(err,res){
           if(err){
             console.log(err)
@@ -499,6 +502,7 @@ export default {
               roleName: scope.row.roleName,
               auth: scope.row.auth
             })
+            .withCredentials()
             .end((err, res) => {
               if(err) {
                 console.log(err)
@@ -547,6 +551,7 @@ export default {
                   roleType: that.form.roleName === '管理员'?'0':'1',
                   belong: 1
                 })
+                .withCredentials()
                 .end((err, res) => {
                   if (err) {
                     console.log(err)
@@ -580,6 +585,7 @@ export default {
     var that = this
     request
      .post(host + 'franchisee/account/getRole')
+     .withCredentials()
      .end((err, res) => {
        if (err) {
          console.log(err)
@@ -619,6 +625,7 @@ export default {
           // 初始化查询
            request
             .post(host + 'franchisee/account/getRole?page=' + val)
+            .withCredentials()
             .end((err, res) => {
               if (err) {
                 console.log(err)
@@ -655,6 +662,7 @@ export default {
           .send({
             roleName: this.roleName.trim()
           })
+          .withCredentials()
           .end(function(error,res){
             if(error){
               console.log(error)

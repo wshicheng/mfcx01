@@ -164,6 +164,7 @@
             },
             "date": this.$route.query.date
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)

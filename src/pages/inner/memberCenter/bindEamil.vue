@@ -211,6 +211,7 @@ export default {
                 that.loading = true
                 request.post(host + 'franchisee/userCenter/bindingEmail')
                 .send({id:1123339, email: that.ruleForm.maiAccount, password: that.ruleForm.account_password})
+                .withCredentials()
                 .end((err, res) => {
                   if (err) {
                     console.log(err)

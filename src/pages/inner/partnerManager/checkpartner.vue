@@ -186,6 +186,7 @@ export default {
 				'userId': 'admin',
 				'id': this.$route.params.id
 			})
+			.withCredentials()
 			.end((err, res) => {
 				if (err) {
 					console.log('err:' + err)

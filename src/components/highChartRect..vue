@@ -33,6 +33,7 @@
             'franchiseeId': '123456',
             'userId': 'admin'
           })
+          .withCredentials()
           .end((error, res) => {
             // console.log('this is entry')
             if (error) {
@@ -190,6 +191,7 @@
               'franchiseeId': '123456',
               'userId': 'admin'
             })
+            .withCredentials()
             .end((error, res) => {
               // console.log('this is entry')
               if (error) {
@@ -244,6 +246,7 @@
                 'end': this.$store.state.timeline.newObj.time2,
                 'type': type
               })
+              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)

@@ -213,6 +213,7 @@ export default {
           that.loading = true
                 request.post(host + 'franchisee/account/updateEmail4Fran')
                 .send({id:1123339, email: that.ruleForm.maiAccount,pwd: that.ruleForm.account_password})
+                .withCredentials()
                 .end((err, res) => {
                   if (err) {
                     console.log(err)

@@ -374,6 +374,7 @@ export default {
        if(this.accountOrUsername.trim().length>0||this.telOrMail.trim().length>0){
           request.post(host + 'franchisee/account/queryAccount')
           .send(obj)
+          .withCredentials()
           .end(function(error,res){
             if(error){
               console.log(error)
@@ -464,6 +465,7 @@ export default {
               }
              request.post(host + 'franchisee/account/queryAccount?page=' + val)
               .send(obj)
+              .withCredentials()
               .end(function(error,res){
                 if(error){
                   console.log(error)

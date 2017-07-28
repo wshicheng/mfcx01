@@ -362,6 +362,7 @@ export default {
         'franchiseeId': '123456',
         'userId': 'admin'
       })
+      .withCredentials()
       .end((err, res) => {
         if (err) {
           console.log('err:' + err)
@@ -617,6 +618,7 @@ export default {
             'startDate': startTime,
             'endDate': endTime
           })
+          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -654,6 +656,7 @@ export default {
           },
           "date": this.$route.query.date
         })
+        .withCredentials()
         .end((error, res) => {
           // console.log('this is entry')
           if (error) {
