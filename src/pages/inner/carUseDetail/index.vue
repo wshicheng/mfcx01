@@ -120,6 +120,7 @@
                 </tbody>
               </table>
             </el-tab-pane> -->
+            22
           </el-tabs>
         </el-row>
         <div id="carUseDetail_page">
@@ -147,7 +148,9 @@ export default {
     }
   },
   mounted: function () {
-    this.getBikeEarnings(1)
+    //this.getBikeEarnings(1)
+    var code = this.$route.query.code
+    console.log(code)
     // this.getReplaceBatteryRecord(1)
     // this.getRepareRecord(1)
   },

@@ -153,7 +153,6 @@ export default {
             if (error) {
               console.log('error:', error)
             } else {
-              console.log(JSON.parse(res.text).list)
               var data = (JSON.parse(res.text)).list
               var newData = this.tableDataDel(data)
               this.pagetotal = (JSON.parse(res.text)).totalPage
@@ -206,7 +205,6 @@ export default {
         
     },
     searchByTimeline () {
-      debugger
       var that = this
       if (this.terminalNumber === '' && this.form.data1 === '' && this.form.data2 === '' && this.checkList.length===0) {
         this.$message({
@@ -227,7 +225,6 @@ export default {
         var _endTime = new Date(this.form.data2).getTime()
         _endTime = isNaN(_endTime)?0: _endTime
         _startTime = isNaN(_startTime)?0: _startTime
-        console.log(_endTime,_startTime)
         if(_endTime>_startTime){
           if(_endTime>1&&_startTime<=1){
             this.$message({
@@ -323,7 +320,6 @@ export default {
         obj.boxCode = arr[i].boxCode
         obj.generationsName = arr[i].generationsName
         obj.model = arr[i].model
-        console.log(arr[i].onlineTime)
         if (arr[i].onlineTime == '') {
           obj.onlineTime = ''
         } else {
@@ -445,7 +441,6 @@ export default {
                 if (error) {
                   console.log('error:', error)
                 } else {
-                  console.log(JSON.parse(res.text).list)
                   var data = (JSON.parse(res.text)).list
                   var newData = this.tableDataDel(data)
                   this.pagetotal = (JSON.parse(res.text)).totalPage
@@ -472,7 +467,6 @@ export default {
                 if (error) {
                   console.log('error:', error)
                 } else {
-                  console.log(JSON.parse(res.text))
                   var pagedata = (JSON.parse(res.text)).list
                   var newData = this.tableDataDel(pagedata)
                   this.tableData = newData
@@ -490,7 +484,6 @@ export default {
             var startTime = new Date(val).getTime()
             var endTime = new Date(this.form.data2).getTime()
             endTime = isNaN(endTime)?0: endTime
-            console.log(endTime.toString().length)
             if((startTime>endTime)&&endTime.toString().length>1){
               this.$message({
                 type: 'error',
@@ -515,7 +508,6 @@ export default {
             var endTime = new Date(val).getTime()
             var startTime = new Date(this.form.data1).getTime()
             startTime = isNaN(startTime)?0: startTime
-            console.log(startTime.toString().length)
             if((endTime<startTime)&&startTime.toString().length>1){
               this.$message({
                 type: 'error',

@@ -4,7 +4,7 @@
       <el-col>
         <el-button class="selectAll" id="msgCenterBtn" type="primary" @click="selectAll">全部设为已读</el-button>
       </el-col>
-      <el-col>22
+      <el-col>
         <el-table
           :data="tableData"
           style="width:100%"
