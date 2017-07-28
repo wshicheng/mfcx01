@@ -142,7 +142,7 @@ export default {
         this.isQuery = true
         if(this.checkList.length>0){
           request
-          .post(host + 'franchisee/bikeManager/queryBikes')
+          .post(host + 'franchisee/bikeManager/getBikes')
           .send({
             end: this.form.data2.trim().length>0?this.form.data2:null,
             start: this.form.data1.trim().length>0?this.form.data1:null,
@@ -206,6 +206,7 @@ export default {
         
     },
     searchByTimeline () {
+      debugger
       var that = this
       if (this.terminalNumber === '' && this.form.data1 === '' && this.form.data2 === '' && this.checkList.length===0) {
         this.$message({
@@ -235,7 +236,7 @@ export default {
             })
           }else{
              request
-              .post(host + 'franchisee/bikeManager/queryBikes')
+              .post(host + 'franchisee/bikeManager/getBikes')
               .send({
                 end: endTime,
                 start: startTime,
@@ -273,7 +274,7 @@ export default {
             })
           }else{
             request
-              .post(host + 'franchisee/bikeManager/queryBikes')
+              .post(host + 'franchisee/bikeManager/getBikes')
                 .send({
                   end: endTime,
                   start: startTime,
@@ -357,7 +358,7 @@ export default {
             endTime = moment(this.form.data2).format('YYYY-MM-DD')
           }
         //  request
-        //     .post(host + 'franchisee/bikeManager/queryBikes?page=' + val)
+        //     .post(host + 'franchisee/bikeManager/getBikes?page=' + val)
         //     .send({
         //       end: this.form.data2.trim().length>0?this.form.data2:null,
         //       start: this.form.data1.trim().length>0?this.form.data1:null,
@@ -433,7 +434,7 @@ export default {
             }
           if(this.isQuery===true){
             request
-              .post(host + 'franchisee/bikeManager/queryBikes?page=' + val)
+              .post(host + 'franchisee/bikeManager/getBikes?page=' + val)
               .send({
                 end: this.form.data2.trim().length>0?this.form.data2:null,
                 start: this.form.data1.trim().length>0?this.form.data1:null,
