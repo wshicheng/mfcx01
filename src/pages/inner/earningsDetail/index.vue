@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column
         prop="placeOrderTime"
-        label="骑行时间（时间）"
+        label="骑行时间（分钟）"
         min-width="10%"
        >
       </el-table-column>
@@ -64,13 +64,13 @@
         >
       </el-table-column>
       <el-table-column
-        prop="couponPayfor"
-        label="优惠卷支付"
+        prop="couponAmount"
+        label="优惠券支付"
         min-width="15%"
        >
       </el-table-column>
       <el-table-column
-        prop="actualAmount"
+        prop="userPayAmount"
         label="实际收益（元）"
         min-width="15%"
        >
@@ -532,8 +532,8 @@ export default {
          * 下面的数据为新增数据
          * 需跟后台对接
          * */
-        obj.couponPayfor = arr[i].couponPayfor
-        obj.actualAmount = arr[i].actualAmount
+        obj.couponAmount = arr[i].couponAmount
+        obj.userPayAmount = arr[i].userPayAmount
         arrDeled.push(obj)
       }
       return arrDeled

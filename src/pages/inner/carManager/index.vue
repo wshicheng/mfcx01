@@ -71,7 +71,7 @@
           min-width="80">
         </el-table-column>
         <el-table-column
-          prop="bikePosition"
+          prop="location"
           label="车辆位置">
         </el-table-column>
       </el-table>
@@ -337,6 +337,7 @@ export default {
         }
         obj.state = arr[i].state
         obj.orderNum = arr[i].orderNum
+        obj.location = arr[i].location
         /*
           上面的字段一部分需求去掉了，下面的需求为新增字段
         */

@@ -30,7 +30,7 @@
                   <td class="lang">
                     <span class="prex">所属区域:</span>{{bikeInfo.cityName}}</td>
                   <td>
-                    <span class="prex">车辆位置:</span>无为县****区****路****号</td>
+                    <span class="prex">车辆位置:</span>{{bikeInfo.location}}</td>
                 </tr>
               </tbody>
             </table>
@@ -71,10 +71,10 @@
               <el-table-column label="订单费用" prop="money">
 
               </el-table-column>
-              <el-table-column label="优惠券支付">
+              <el-table-column label="优惠券支付" prop="couponAmount">
 
               </el-table-column>
-              <el-table-column label="实际收益">
+              <el-table-column label="实际收益" prop="userPayAmount">
 
               </el-table-column>
             </el-table>
@@ -111,7 +111,9 @@
                 :current-page.sync="currentPage3"
                 :page-size="10"
                 layout="prev, pager, next, jumper"
-                :total="totalItems">
+                :total="totalItems"
+                v-show="pageShow"
+                >
               </el-pagination>
             </el-tab-pane>
             <!-- <el-tab-pane label="换电记录" name="second" class="recodeTable">
@@ -190,13 +192,14 @@ export default {
          cityName: '',
          location:'',
          generationsName:'',
-         model: ''
+         model: '',
+         location:''
       }
     }
   },
   mounted: function () {
-    this.bikeInfo.code = '000000009' 
-    //this.$route.query.code
+    //this.bikeInfo.code = '000000009' 
+    this.bikeInfo.code = this.$route.query.code
     request.post(host + 'franchisee/franchiseeManager/getBikeDetail?bikeCode='+ this.bikeInfo.code +'&page=1&size=10')
       .end((error,res)=>{
         if(error){
@@ -208,6 +211,7 @@ export default {
             var obj = Object.assign({},item,{chargeTime:moment(item.chargeTime).format('YYYY-MM-DD')})
             return obj
           })
+
           this.tableData = newArr
           this.totalPage = JSON.parse(res.text).pageList.totalPage
           this.totalItems = JSON.parse(res.text).pageList.totalItems

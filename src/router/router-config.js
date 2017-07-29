@@ -51,7 +51,6 @@ import loginlog from '../pages/inner/logManager/loginlog.vue'
 import operationLog from '../pages/inner/logManager/operationLog.vue'
 
 import NotFoundPage from '../pages/404/index.vue'
-
 export default [
     { path: '*', component: NotFoundPage },
     {
@@ -65,16 +64,19 @@ export default [
         children: [{
                 path: '/',
                 name: '首页',
+                auth: 1100,
                 component: pageIndex
             },
             {
                 path: '/index/carManager',
                 name: '车辆管理',
+                auth: 1200,
                 component: carManager
             },
             {
                 path: '/index/consumeData',
                 name: '',
+                auth: 1301,
                 component: consumeData,
                 children: [{
                         path: '/',
@@ -91,21 +93,25 @@ export default [
             {
                 path: '/index/allDaysData',
                 name: '24小时数据走势',
+                auth: 1302,
                 component: allDaysData
             },
             {
                 path: '/index/hotMap',
                 name: '热力图',
+                auth: 1303,
                 component: hotMap
             },
             {
                 path: '/index/abnormalData',
                 name: '异常数据',
+                auth: 1304,
                 component: abnormalData
             },
             {
                 path: '/index/partnerManager',
                 name: '合伙人管理',
+                auth: 2000,
                 component: partnerManager,
                 children: [{
                     path: '/index/partnerManager/addpartner',
@@ -120,11 +126,13 @@ export default [
             {
                 path: '/index/earningsDetail',
                 name: '收入明细',
+                auth: 1401,
                 component: earningsDetail
             },
             {
                 path: '/index/settlementRecord',
                 name: '结算记录',
+                auth: 1402,
                 component: settlementRecord
             },
             {
@@ -140,6 +148,7 @@ export default [
             {
                 path: '/index/accountManager',
                 name: '账号管理',
+                auth: 1500,
                 component: accountManager,
                 children: [{
                     path: '/index/accountManager/addaccount',
@@ -149,37 +158,40 @@ export default [
             },
             {
                 path: '/index/memberCenter',
+                auth: 1600,
                 name: '个人中心',
                 component: memberCenter,
                 children: [{
-                    path: '/index/memberCenter/bindEamil',
-                    name: '绑定邮箱',
-                    component: bindEamil
-                }, 
-                {
-                    path: '/index/memberCenter/updateEmail',
-                    name: '修改邮箱',
-                    component: updateEmail
-                },
-                {
-                    path: '/index/memberCenter/bindTel',
-                    name: '绑定手机号',
-                    component: bindTel
-                }, 
-                {
-                    path: '/index/memberCenter/updateTel',
-                    name: '修改手机号',
-                    component: updateTel
-                }, 
-                {
-                    path: '/index/memberCenter/amendPassword',
-                    name: '修改密码',
-                    component: amendPassword
-                }]
+                        path: '/index/memberCenter/bindEamil',
+                        name: '绑定邮箱',
+                        component: bindEamil
+                    },
+                    {
+                        path: '/index/memberCenter/updateEmail',
+                        name: '修改邮箱',
+                        component: updateEmail
+                    },
+                    {
+                        path: '/index/memberCenter/bindTel',
+                        name: '绑定手机号',
+                        component: bindTel
+                    },
+                    {
+                        path: '/index/memberCenter/updateTel',
+                        name: '修改手机号',
+                        component: updateTel
+                    },
+                    {
+                        path: '/index/memberCenter/amendPassword',
+                        name: '修改密码',
+                        component: amendPassword
+                    }
+                ]
             },
             {
                 path: '/index/roleManager',
                 name: '角色管理',
+                auth: 1700,
                 component: roleManager,
                 children: [{
                     path: '/index/roleManager/addrole',
@@ -190,20 +202,24 @@ export default [
             {
                 path: '/index/messageCenter',
                 name: '信息中心',
+                auth: 1800,
                 component: messageCenter
             },
             {
                 path: '/index/logManager',
                 name: '',
                 component: logManager,
+                auth: 1900,
                 children: [{
                         path: '',
                         name: '登录日志',
+                        auth: 1901,
                         component: loginlog
                     },
                     {
                         path: '/index/logManager/operationLog',
                         name: '操作日志',
+                        auth: 1902,
                         component: operationLog
                     }
                 ]
