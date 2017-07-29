@@ -152,7 +152,7 @@
     outline: none;
     border: none;
     /* border-radius: 4px; */
-    background: rgba(52,52,67, 0.8);}
+    background: rgba(52,52,67, 0.8);float:right;}
     .el-form-item__content .el-input input.el-input__inner{width:initial}
     .el-pagination{margin-top:20px;margin-left:0;padding-left:0;margin-bottom:10px;border-left:none;}
 </style>
@@ -215,7 +215,6 @@
             franchiseeId: '123456',
             userId: 'jjjj'
           })
-          .withCredentials()
           .end(function(err, res){
             if (err) {
               console.log(err)
@@ -279,7 +278,6 @@
             franchiseeId: '123456',
             userId: 'jjjj'
           })
-          .withCredentials()
           .end(function(err, res){
             if (err) {
               console.log(err)
@@ -348,7 +346,6 @@
           franchiseeId: '123456',
           userId: 'jjjj'
         })
-        .withCredentials()
         .end(function(err, res){
           if (err) {
             console.log(err)
@@ -424,7 +421,6 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
-            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
@@ -443,7 +439,6 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
-            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
@@ -462,7 +457,6 @@
               franchiseeId: '123456',
               userId: 'jjjj'
             })
-            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)

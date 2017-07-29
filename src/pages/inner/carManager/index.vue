@@ -137,23 +137,30 @@ export default {
     },
     handleList () {
         var radio = this.checkList
-        var startTime,endTime
+        var startTime, endTime
+        if (this.form.data1 === '' || this.form.data2 === '') {
+          startTime = null
+          endTime = null
+        } else {
+          startTime = moment(this.form.data1).format('YYYY-MM-DD')
+          endTime = moment(this.form.data2).format('YYYY-MM-DD')
+        }
       // 根据用户选择不同状态进行数据的筛选
         this.isQuery = true
         if(this.checkList.length>0){
           request
           .post(host + 'franchisee/bikeManager/getBikes')
           .send({
-            end: this.form.data2.trim().length>0?this.form.data2:null,
-            start: this.form.data1.trim().length>0?this.form.data1:null,
+            end: endTime,
+            start:startTime,
             state:this.checkList.length>0?this.checkList:null,
             name:this.terminalNumber?this.terminalNumber:null
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
             } else {
+              console.log(JSON.parse(res.text).list)
               var data = (JSON.parse(res.text)).list
               var newData = this.tableDataDel(data)
               this.pagetotal = (JSON.parse(res.text)).totalPage
@@ -176,12 +183,11 @@ export default {
           request
             .post(host + 'franchisee/bikeManager/getBikes')
             .send({
-              end: this.form.data2.trim().length>0?this.form.data2:null,
-              start: this.form.data1.trim().length>0?this.form.data1:null,
+              end: endTime,
+              start: startTime,
               state:this.checkList.length>0?this.checkList:null,
               name:this.terminalNumber?this.terminalNumber:null
             })
-            .withCredentials()
             .end((error, res) => {
               if (error) {
                 this.loading2  = false
@@ -227,6 +233,7 @@ export default {
         var _endTime = new Date(this.form.data2).getTime()
         _endTime = isNaN(_endTime)?0: _endTime
         _startTime = isNaN(_startTime)?0: _startTime
+        console.log(_endTime,_startTime)
         if(_endTime>_startTime){
           if(_endTime>1&&_startTime<=1){
             this.$message({
@@ -240,9 +247,8 @@ export default {
                 end: endTime,
                 start: startTime,
                 state:that.checkList.length>0?that.checkList:null,
-                name:that.terminalNumber
+                name:that.terminalNumber!==''?that.terminalNumber:null
               })
-              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   this.loading2  = false
@@ -281,7 +287,6 @@ export default {
                   state:that.checkList.length>0?that.checkList:null,
                   name:that.terminalNumber
                 })
-                .withCredentials()
                 .end((error, res) => {
                   if (error) {
                     this.loading2  = false
@@ -324,6 +329,7 @@ export default {
         obj.boxCode = arr[i].boxCode
         obj.generationsName = arr[i].generationsName
         obj.model = arr[i].model
+        console.log(arr[i].onlineTime)
         if (arr[i].onlineTime == '') {
           obj.onlineTime = ''
         } else {
@@ -388,15 +394,23 @@ export default {
     },
     mountedWay () {
       this.loading2 = true
+      var startTime = null
+      var endTime = null
+      if (this.form.data1 === '' || this.form.data2 === '') {
+        startTime = null
+        endTime = null
+      } else {
+        startTime = moment(this.form.data1).format('YYYY-MM-DD')
+        endTime = moment(this.form.data2).format('YYYY-MM-DD')
+      }
       request
         .post(host + 'franchisee/bikeManager/getBikes')
         .send({
-          end: this.form.data2.trim().length>0?this.form.data2:null,
-          start: this.form.data1.trim().length>0?this.form.data1:null,
+          end: endTime,
+          start: startTime,
           state:this.checkList.length>0?this.checkList:null,
           name:this.terminalNumber?this.terminalNumber:null
         })
-        .withCredentials()
         .end((error, res) => {
           if (error) {
             this.loading2  = false
@@ -434,19 +448,21 @@ export default {
               endTime = moment(this.form.data2).format('YYYY-MM-DD')
             }
           if(this.isQuery===true){
+            console.log(this.form.data2.length)
+            //return
             request
               .post(host + 'franchisee/bikeManager/getBikes?page=' + val)
               .send({
-                end: this.form.data2.trim().length>0?this.form.data2:null,
-                start: this.form.data1.trim().length>0?this.form.data1:null,
+                end: endTime,
+                start: startTime,
                 state:this.checkList.length>0?this.checkList:null,
-                name:this.terminalNumber?this.terminalNumber:null
+                name:this.terminalNumber!==''?this.terminalNumber:null
               })
-              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)
                 } else {
+                  console.log(JSON.parse(res.text).list)
                   var data = (JSON.parse(res.text)).list
                   var newData = this.tableDataDel(data)
                   this.pagetotal = (JSON.parse(res.text)).totalPage
@@ -464,16 +480,16 @@ export default {
             request
               .post(host + 'franchisee/bikeManager/getBikes?page=' + val)
               .send({
-                end: this.form.data2.trim().length>0?this.form.data2:null,
-                start: this.form.data1.trim().length>0?this.form.data1:null,
+                end: endTime,
+                start: startTime,
                 state:this.checkList.length>0?this.checkList:null,
                 name:this.terminalNumber?this.terminalNumber:null
               })
-              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)
                 } else {
+                  console.log(JSON.parse(res.text))
                   var pagedata = (JSON.parse(res.text)).list
                   var newData = this.tableDataDel(pagedata)
                   this.tableData = newData
@@ -491,6 +507,7 @@ export default {
             var startTime = new Date(val).getTime()
             var endTime = new Date(this.form.data2).getTime()
             endTime = isNaN(endTime)?0: endTime
+            console.log(endTime.toString().length)
             if((startTime>endTime)&&endTime.toString().length>1){
               this.$message({
                 type: 'error',
@@ -515,6 +532,7 @@ export default {
             var endTime = new Date(val).getTime()
             var startTime = new Date(this.form.data1).getTime()
             startTime = isNaN(startTime)?0: startTime
+            console.log(startTime.toString().length)
             if((endTime<startTime)&&startTime.toString().length>1){
               this.$message({
                 type: 'error',

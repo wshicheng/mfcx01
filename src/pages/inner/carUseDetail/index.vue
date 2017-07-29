@@ -5,35 +5,38 @@
           <h3>车辆详情</h3>
         </div>
         <el-row>
-          <el-col :span="16">
+          <el-col :span="24">
             <table>
               <tbody>
                 <tr>
                   <td class="lang">
-                    <span class="prex">车辆号:</span>100001</td>
+                    <span class="prex">车辆号:</span>{{bikeInfo.code}}</td>
                   <td>
-                    <span class="prex">终端编号:</span>100001</td>
+                    <span class="prex">终端编号:</span>{{bikeInfo.boxCode}}</td>
                 </tr>
                 <tr>
                   <td class="lang">
-                    <span class="prex">车辆型号:</span>小蜜蜂1代</td>
+                    <span class="prex">车辆型号:</span>{{bikeInfo.generationsName}}</td>
                   <td>
-                    <span class="prex">车型:</span>车型1</td>
+                    <span class="prex">车型:</span>{{bikeInfo.model}}</td>
                 </tr>
                 <tr>
                   <td class="lang">
-                    <span class="prex">上线日期:</span>2015-01-01</td>
+                    <span class="prex">上线日期:</span>{{bikeInfo.onlineTime}}</td>
                   <td>
                     <span class="prex">报废日期:</span>2020-01-01</td>
                 </tr>
                 <tr>
                   <td class="lang">
-                    <span class="prex">所属区域:</span>无为县</td>
+                    <span class="prex">所属区域:</span>{{bikeInfo.cityName}}</td>
                   <td>
                     <span class="prex">车辆位置:</span>无为县****区****路****号</td>
                 </tr>
               </tbody>
             </table>
+          </el-col>
+          <el-col>
+            
           </el-col>
           <!-- <el-col :span="6" class="battery">
             <ul>
@@ -50,9 +53,32 @@
           </el-col> -->
         </el-row>
         <el-row class="record">
+          
           <el-tabs v-model="activeName">
             <el-tab-pane class="incomeRecord recodeTable" label="收益记录" name="first">
-              <table>
+              <el-table
+              :data="tableData"
+              style="width:100%"
+            >
+              <el-table-column prop="chargeTime" label="下单时间">
+              </el-table-column>
+              <el-table-column label="骑行时间（分钟）" prop="time">
+
+              </el-table-column>
+              <el-table-column label="里程（公里）" prop="mileage">
+
+              </el-table-column>
+              <el-table-column label="订单费用" prop="money">
+
+              </el-table-column>
+              <el-table-column label="优惠券支付">
+
+              </el-table-column>
+              <el-table-column label="实际收益">
+
+              </el-table-column>
+            </el-table>
+              <!--<table>
                 <thead>
                   <tr>
                     <th>下单时间</th>
@@ -78,7 +104,15 @@
                     <td>{{item.couponAmount}}</td>
                   </tr>
                 </tbody>
-              </table>
+              </table>-->
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage3"
+                :page-size="10"
+                layout="prev, pager, next, jumper"
+                :total="totalItems">
+              </el-pagination>
             </el-tab-pane>
             <!-- <el-tab-pane label="换电记录" name="second" class="recodeTable">
               <table>
@@ -120,7 +154,6 @@
                 </tbody>
               </table>
             </el-tab-pane> -->
-            22
           </el-tabs>
         </el-row>
         <div id="carUseDetail_page">
@@ -139,18 +172,53 @@ import {host} from '../../../config/index'
 export default {
   data: function () {
     return {
+      currentPage3:1,
+      pageShow:false,
+      totalItems:1,
+      tableData:[],
       router: this.$route.query.carNum,
       activeName: 'first',
       incomeTableData: [],
       repairTableData: [],
       batteryTableData: [],
-      pageTotal: ''
+      pageTotal: '',
+      bikeInfo:{
+         code: '',
+         boxCode:'',
+         onlineTime:'',
+         endTime:' 2020-2-2',
+         cityName: '',
+         location:'',
+         generationsName:'',
+         model: ''
+      }
     }
   },
   mounted: function () {
-    //this.getBikeEarnings(1)
-    var code = this.$route.query.code
-    console.log(code)
+    this.bikeInfo.code = '000000009' 
+    //this.$route.query.code
+    request.post(host + 'franchisee/franchiseeManager/getBikeDetail?bikeCode='+ this.bikeInfo.code +'&page=1&size=10')
+      .end((error,res)=>{
+        if(error){
+          console.log(error)
+        }else {
+          
+          this.bikeInfo = Object.assign({},JSON.parse(res.text).bike,{onlineTime:moment(JSON.parse(res.text).bike.onlineTime).format('YYYY-MM-DD')})
+          var newArr = JSON.parse(res.text).pageList.list.map((item)=>{
+            var obj = Object.assign({},item,{chargeTime:moment(item.chargeTime).format('YYYY-MM-DD')})
+            return obj
+          })
+          this.tableData = newArr
+          this.totalPage = JSON.parse(res.text).pageList.totalPage
+          this.totalItems = JSON.parse(res.text).pageList.totalItems
+            if(this.totalPage>1){
+              this.pageShow  = true
+            }else {
+              this.pageShow = false
+            }
+          }
+      })
+    // this.getBikeEarnings(1)
     // this.getReplaceBatteryRecord(1)
     // this.getRepareRecord(1)
   },
@@ -162,6 +230,12 @@ export default {
     })
   }, 
   methods: {
+    handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },
     getBikeEarnings (page) {
       request
         .post(host + 'franchisee/bikeManager/bikeRevenueRecord?page=' + page)
@@ -170,7 +244,6 @@ export default {
           'userId': 'admin',
           'code': this.$route.query.code
         })
-        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -330,6 +403,34 @@ export default {
         }
       }, 200)
     }
+  },
+  watch:{
+    currentPage3:{
+      handler: function(val,oldVal){
+        request.post(host + 'franchisee/franchiseeManager/getBikeDetail?bikeCode='+ this.bikeInfo.code +'&page=' + val + '&size=10')
+        .end((error,res)=>{
+          if(error){
+            console.log(error)
+          }else {
+            
+            this.bikeInfo = Object.assign({},JSON.parse(res.text).bike,{onlineTime:moment(JSON.parse(res.text).bike.onlineTime).format('YYYY-MM-DD')})
+            var newArr = JSON.parse(res.text).pageList.list.map((item)=>{
+              var obj = Object.assign({},item,{chargeTime:moment(item.chargeTime).format('YYYY-MM-DD')})
+              return obj
+            })
+            this.tableData = newArr
+            this.totalPage = JSON.parse(res.text).pageList.totalPage
+            this.totalItems = JSON.parse(res.text).pageList.totalItems
+              if(this.totalPage>1){
+                this.pageShow  = true
+              }else {
+                this.pageShow = false
+              }
+            }
+        })
+      },
+      deep: true
+    }
   }
 }
 </script>
@@ -474,5 +575,5 @@ div#carUseDetail_page {
   margin-left: 5px;
   border: 1px solid #666;
 }
-
+div.el-pagination {margin-left:0;padding-left:0;margin-top:20px;margin-bottom:10px;}
 </style>

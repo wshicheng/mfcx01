@@ -41,21 +41,25 @@ export default {
     }
   },
   mounted () {
-    this.form.data2 = moment().format('YYYY-MM-DD')
     var timeType = this.$route.query.type
     if(timeType === 'day') {
       this.isDay = true
       this.isWeek = false
       this.isMonth = false
+      
     }else if(timeType === 'week') {
       this.isDay = false
       this.isWeek = true
       this.isMonth = false
+     
     }else {
       this.isDay = false
       this.isWeek = false
       this.isMonth = true
+      
     }
+    this.$store.commit('recodeConsumeDataType',timeType)
+    console.log(this.$store.state.consumeDataType)
   },
   methods: {
     handleChangeType(e) {
@@ -64,18 +68,24 @@ export default {
           this.form.type = 'date'
           this.$router.push({ query: { type: 'day' } })
           this.form.formatType = 'yyyy-MM-dd'
+          this.$store.commit('recodeConsumeDataType','day')
+          console.log(this.$store.state.consumeDataType)
           break
         }
         case '周': {
           this.form.type = 'week'
           this.$router.push({ query: { type: 'week' } })
           this.form.formatType = 'yyyy 第 WW 周'
+          this.$store.commit('recodeConsumeDataType','week')
+          console.log(this.$store.state.consumeDataType)
           break
         }
         case '月': {
           this.form.type = 'month'
           this.$router.push({ query: { type: 'month' } })
           this.form.formatType = ''
+          this.$store.commit('recodeConsumeDataType','month')
+          console.log(this.$store.state.consumeDataType)
           break
         }
       }

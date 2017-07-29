@@ -12,15 +12,15 @@ import Vuex from 'vuex'
 // Vue.use(VueResourceProgressBarInterceptor)
 
 Vue.directive('title', {
-  inserted: function (el, binding) {
-    document.title = el.innerText
-    el.remove()
-  }
+    inserted: function(el, binding) {
+        document.title = el.innerText
+        el.remove()
+    }
 })
 
 // Vue.interceptors.push((request, next) => {
 //   console.log(this)
-  
+
 //   request.method = 'POST'
 //   　　next((response) => {
 //   　　response.body = '...'

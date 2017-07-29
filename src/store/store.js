@@ -11,7 +11,8 @@ const state = {
     allData: [],
     partnerList: [],
     partnerAdded: false,
-    accountMangerData: []
+    accountMangerData: [],
+    consumeDataType : ''
 }
 
 const mutations = {
@@ -38,6 +39,9 @@ const mutations = {
     setAllData(state, { obj }) {
         console.log('[[ setAllData is setted ]]')
         state.allData = obj
+    },
+    recodeConsumeDataType(state, dateType){
+        state.consumeDataType = dateType
     },
     setPartnerList(state, obj) {
         console.log('[[ setPartnerList ]]')

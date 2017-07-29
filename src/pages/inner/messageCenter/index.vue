@@ -1,5 +1,5 @@
 <template>
-  <div class="messageCenter2">
+  <div class="messageCenter">
     <el-row>
       <el-col>
         <el-button class="selectAll" id="msgCenterBtn" type="primary" @click="selectAll">全部设为已读</el-button>
@@ -48,7 +48,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage3"
-      :page-size="100"
+      :page-size="10"
       layout="prev, pager, next, jumper"
       :total="totalItems"
       v-show="pageShow"
@@ -83,6 +83,7 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
   i.icon-xinfeng.unread{cursor:pointer;color:#f35000}
   .el-table th>.tableTitle{margin-left: 20px;}
   /* td.isread i {color:gray;cursor:default;} */
+  div.el-pagination{padding-left:0;margin-top:20px;margin-bottom:10px;}
 </style>
 <script>
   import request from 'superagent'
@@ -99,7 +100,10 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
         msg_totalPage: '',
         msg_currentPage: 1,
         tableData: [],
-        msgList: []
+        msgList: [],
+        pageShow:false,
+        totalItems:1,
+        currentPage3:1,
       }
     },
     mounted: function () {
@@ -109,7 +113,6 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
         franchiseeId: '123456',
         userId: 'jjjj'
       })
-      .withCredentials()
       .end(function(err, res){
         if (err) {
           console.log(err)
@@ -121,69 +124,40 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
           that.checkWordsLength()
           that.msg_totalPage = JSON.parse(res.text).totalPage || 20
           var len = JSON.parse(res.text).list.length
-          if (len>0) {
-            that.hasMsgData = false
-            $('.M-box').pagination({
-              pageCount: that.msg_totalPage,
-              jump: true,
-              coping: true,
-              homePage: '首页',
-              endPage: '尾页',
-              prevContent: '«',
-              nextContent: '»'
-            })
-            $('.M-box').click(function (e) {
-              if (e.target.getAttribute('class') === 'active') {
-                return false
-              }
-              if (e.target.tagName === 'A') {
-                if (e.target.innerText === '首页') {
-                  that.msg_currentPage = 1
-                }
-                if (e.target.innerText === '尾页') {
-                  that.msg_currentPage = that.msg_totalPage
-                }
-                if (e.target.innerText === '»') {
-                  that.msg_currentPage++
-                }
-                if (e.target.innerText === '«') {
-                  that.msg_currentPage--
-                }
-                if (checkPositiveNumber(e.target.innerText)) {
-                  that.msg_currentPage = e.target.innerText
-                }
-                if (e.target.innerText === '跳转') {
-                  e.preventDefault()
-                  var jumpPageNum = $('.M-box .active')
-                  that.msg_currentPage = jumpPageNum[0].innerText
-                }
-              }
-            })
-            $(document).keydown(function (e) {
-              if (e.keyCode === 13) {
-                that.msg_currentPage = e.target.value
-                console.log(that.currentPage)
-              }
-            })
+          if (that.msg_totalPage>1) {
+              that.pageShow = true
+          }else {
+            that.pageShow = false
           }
+
+          that.totalItems = JSON.parse(res.text).totalItems
         }
       })
     },
     watch: {
-      msg_currentPage: {
+      currentPage3: {
         handler: function (val, oldVal) {
           var that = this
-          request.post(host + 'franchisee/msg/getAllMsg?page=' + that.msg_currentPage)
+          request.post(host + 'franchisee/msg/getAllMsg?page=' + val)
             .send({
               franchiseeId: '123456',
               userId: 'jjjj'
             })
-            .withCredentials()
             .end(function (err, res) {
               if (err) {
                 console.log(err)
               } else {
-                that.tableData = JSON.parse(res.text).list
+                var arr = JSON.parse(res.text).list
+                that.tableData = arr.map((item) => {
+                  return Object.assign({},item,{createTime: moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')},{isChecked: item.isRead===0?false: true},{unRead:true,read:item.isRead===0?false: true})
+                })
+                that.totalPage = JSON.parse(res.text).totalPage
+                if(that.totalPage>1){
+                  that.pageShow = true
+                }else {
+                  that.pageShow  = false
+                }
+                that.totalItems  = JSON.parse(res.text).totalItems
                 that.checkWordsLength()
               }
             })
@@ -192,6 +166,12 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
       }
     },
     methods: {
+       handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+      },
       showMordWords (msg) {
         var len = msg.prevHtml.length
         // 截取的字符串 content 暂存在temp中
@@ -232,7 +212,6 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
               .send({
                 list: this.msgList
               })
-              .withCredentials()
               .end(function(error,res){
                 if(error) {
                   console.log(error)
@@ -255,7 +234,6 @@ div.hasData{line-height: 60px;text-align: center;height: 60px;color:#9e9090;widt
           .send({
             list: newArr
           })
-          .withCredentials()
           .end(function(error,res){
             if(error) {
               console.log(error)

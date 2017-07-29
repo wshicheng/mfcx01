@@ -37,8 +37,8 @@
           prop='bikeCode'>
           <template scope="scope">
             <el-tooltip placement="top">
-              <div slot="content">多行信息<br/>第二行信息</div>
-              <el-button>Top center</el-button>
+              <!--<div slot="content">多行信息<br/>第二行信息</div>
+              <el-button>Top center</el-button>-->
             </el-tooltip>
             <span>11</span>
           </template>
@@ -49,7 +49,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage3"
-      :page-size="100"
+      :page-size="10"
       layout="prev, pager, next, jumper"
       :total="totalItems"
       v-show="pageShow"
@@ -137,7 +137,7 @@ export default {
       lists: [],
       emptyText: ' ',
       pageTotal: '',
-      totalItems:null,
+      totalItems:1,
       noDate: false,
       loading2: false,
       currentPage3: 1,
@@ -167,15 +167,14 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
             } else {
               var arr = JSON.parse(res.text).list
               var pageNumber = JSON.parse(res.text).totalPage
-              this.totalItems = pageNumber
-              if(this.totalItems>1) {
+              this.totalItems = JSON.parse(res.text).totalItems
+              if(pageNumber>1) {
                 this.pageShow = true
               }else {
                 this.pageShow = false
@@ -186,7 +185,7 @@ export default {
               if (this.$route.query.type === 'week') {
                 for (var i = 0; i < arr.length; i++) {
                   var obj = {}
-                  obj.time = moment(arr[i].time).format('YYYY年第ww周')
+                  obj.time = moment(arr[i].time).format('YYYY年第WW周')
                   obj.totalBill = arr[i].totalBill
                   obj.money = arr[i].money
                   newArr.push(obj)
@@ -220,14 +219,14 @@ export default {
     },
     getDateMount () {
       this.loading2 = true
-      var timeType = this.$route.query.type || 'day'
+       //alert(this.$store.state.consumeDataType)
+      var timeType = this.$store.state.consumeDataType
       request
         .post(host +'franchisee/report/consume/' + timeType)
         .send({
           'franchiseeId': '123456',
           'userId': 'admin'
         })
-        .withCredentials()
         .end((error, res) => {
           // console.log('this is entry')
           if (error) {
@@ -240,7 +239,7 @@ export default {
             // loading关闭
             this.loading2 = false
             var pageNumber = JSON.parse(res.text).totalPage
-            this.totalItems = pageNumber
+            this.totalItems = JSON.parse(res.text).totalItems
             if(pageNumber>1){
               this.pageShow = true
             }else {
@@ -250,7 +249,13 @@ export default {
             var newArr = []
             for (var i = 0; i < arr.length; i++) {
               var obj = {}
-              obj.time = moment(arr[i].time).format('YYYY年MM月DD号')
+              if(timeType==='day'){
+                obj.time = moment(arr[i].time).format('YYYY年MM月DD号')
+              }else if(timeType==='week'){
+                obj.time = moment(arr[i].time).format('YYYY第WW周')
+              }else {
+                obj.time = moment(arr[i].time).format('YYYY年MM月')
+              }
               obj.totalBill = arr[i].totalBill
               obj.money = arr[i].money
               newArr.push(obj)
@@ -283,7 +288,6 @@ export default {
               'end': that.$store.state.timeline.newObj.time2,
               'type': type
             })
-            .withCredentials()
             .end((error, res) => {
               if (error) {
                 console.log('error:', error)
@@ -292,6 +296,8 @@ export default {
                 if (JSON.parse(res.text).list.length === 0) {
                   this.lists = ''
                   that.pageShow = false
+                  this.loading2 = false
+                  this.emptyText = ' 暂无数据'
                 } else {
                     var arr = JSON.parse(res.text).list
                     var newArr = []
@@ -301,7 +307,13 @@ export default {
 
                     for (var i = 0; i < arr.length; i++) {
                       var obj = {}
-                      obj.time = moment(arr[i].time).format('YYYY-MM-DD')
+                      if (this.$route.query.type === 'day') {
+                         obj.time = moment(arr[i].time).format('YYYY年MM月DD号')
+                      } else if (this.$route.query.type === 'week') {
+                         obj.time = moment(arr[i].time).format('YYYY年第WW周')
+                      } else {
+                         obj.time = moment(arr[i].time).format('YYYY年MM月')
+                      }
                       obj.totalBill = arr[i].totalBill
                       obj.money = arr[i].money
                       newArr.push(obj)
@@ -346,7 +358,6 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)

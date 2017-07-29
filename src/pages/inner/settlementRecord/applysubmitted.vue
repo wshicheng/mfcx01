@@ -102,7 +102,6 @@ export default {
         'userId': 'admin',
         'withdrawalCode': data1
       })
-      .withCredentials()
       .end((err, res) => {
         if (err) {
           console.log('err:' + err)
@@ -187,7 +186,6 @@ export default {
             'userId': 'admin',
             'withdrawalCode': data1
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)

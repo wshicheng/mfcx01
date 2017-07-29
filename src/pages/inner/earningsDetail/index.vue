@@ -331,7 +331,9 @@ export default {
       timeLine: '',
       show: false,
       show2: false,
-      loading2: false
+      loading2: false,
+      startTime:'',
+      endTime: ''
     }
   },
   mounted () {
@@ -365,7 +367,6 @@ export default {
         'franchiseeId': '123456',
         'userId': 'admin'
       })
-      .withCredentials()
       .end((err, res) => {
         if (err) {
           this.loading2 = false
@@ -444,6 +445,7 @@ export default {
             const filterVal = ['bikeCode', 'orderDate', 'placeOrderTime', 'journey', 'money', 'couponPayfor', 'actualAmount']
             var type = that.$route.query.type
             var newType
+            var startTime,endTime
             switch (type) {
               case 'getRevenueCurDay': {
                 newType = 0
@@ -461,7 +463,7 @@ export default {
                 newType = 3
                 break
               }
-              default : {
+              case 'getRevenueDefine': {
                 if (this.timeLine === '') {
                   this.$message({
                     message: '请输入时间段',
@@ -469,11 +471,12 @@ export default {
                   })
                 } else {
                   newType = 4
-                  var startTime = moment(this.timeLine[0]).format('YYYY-MM-DD HH:MM:SS')
-                  var endTime = moment(this.timeLine[1]).format('YYYY-MM-DD HH:MM:SS')
+                  startTime = moment(this.timeLine[0]).format('YYYY-MM-DD HH:MM:SS')
+                  endTime = moment(this.timeLine[1]).format('YYYY-MM-DD HH:MM:SS')
                 }
               }
             }
+            console.log(endTime)
             request
               .post(host + 'franchisee/revenue/exportRevenueData?type=' + newType)
               .send({
@@ -484,7 +487,6 @@ export default {
                 'startTime': startTime,
                 'endTime': endTime
               })
-              .withCredentials()
               .end((err, res) => {
                 if (err) {
                   console.log('err:' + err)
@@ -548,7 +550,6 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
-        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -582,7 +583,6 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
-        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -616,7 +616,6 @@ export default {
           'franchiseeId': '123456',
           'userId': 'admin'
         })
-        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)
@@ -668,7 +667,6 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -696,7 +694,6 @@ export default {
             'franchiseeId': '123456',
             'userId': 'admin'
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               this.loading2 = false
@@ -729,8 +726,8 @@ export default {
           type: 'warning'
         })
       } else {
-        var startTime = moment(this.timeLine[0]).format('YYYY-MM-DD HH:MM:SS')
-        var endTime = moment(this.timeLine[1]).format('YYYY-MM-DD HH:MM:SS')
+        this.startTime = moment(this.timeLine[0]).format('YYYY-MM-DD HH:MM:SS')
+        this.endTime = moment(this.timeLine[1]).format('YYYY-MM-DD HH:MM:SS')
         this.loading2 = true
         request
           .post(host + 'franchisee/revenue/getRevenueDefine')
@@ -739,10 +736,9 @@ export default {
               'franchiseeId': '123456',
               'userId': 'admin'
             },
-            'startTime': startTime,
-            'endTime': endTime
+            'startTime': this.startTime,
+            'endTime': this.endTime
           })
-          .withCredentials()
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
@@ -779,10 +775,13 @@ export default {
         request
         .post(host + 'franchisee/revenue/'+ type +'?page=' + val)
         .send({
-          'franchiseeId': '123456',
-          'userId': 'admin'
+           "account": {
+              'franchiseeId': '123456',
+              'userId': 'admin'
+            },
+          startTime: this.startTime,
+          endTime : this.endTime
         })
-        .withCredentials()
         .end((err, res) => {
           if (err) {
             console.log('err:' + err)

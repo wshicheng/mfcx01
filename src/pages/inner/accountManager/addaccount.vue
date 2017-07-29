@@ -18,10 +18,21 @@
                 <span class="tips">6-20位字符，可包括字母数字，区分大小写</span>
 							</el-form-item>
 							<el-form-item label="所属角色" prop="role">
-								<el-select v-model="ruleForm.role" placeholder="选择角色类型">
-									<el-option label="管理员" value="管理员"></el-option>
+								<el-select v-model="ruleForm.role" placeholder="选择角色类型"
+                  :remote-method="remoteMethod"
+                  remote
+                  :loading="loading"
+                  :disabled = "isDisabled"
+                >
+                  <el-option
+                    v-for="item in options4"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+									<!--<el-option label="管理员" value="管理员"></el-option>-->
 									<!-- <el-option label="加盟商" value="加盟商"></el-option> -->
-									<el-option label="合伙人" value="合伙人"></el-option>
+									<!--<el-option label="合伙人" value="合伙人"></el-option>-->
 								</el-select>
 							</el-form-item>
 							<el-form-item label="姓名" prop="name">
@@ -180,6 +191,9 @@ export default {
       }
     }
     return {
+      isDisabled: true,
+      options4:[],
+      loading: false,
       ruleForm: {
         id: '',
         emailBinding: '',
@@ -210,6 +224,31 @@ export default {
     }
   },
   methods: {
+    remoteMethod() {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false
+          request.post(host + 'franchisee/account/getRole')
+          .end((error,res)=>{
+            if(error){
+              console.log(error)
+               this.options4 = []
+            }else{
+              var roles = JSON.parse(res.text).list.map((item)=>{
+                  var obj = {}
+                  obj.value = item.roleName
+                  obj.label = item.roleName
+                  return obj
+              })
+              if(roles.length>0){
+                this.isDisabled = false
+              }
+              console.log(roles)
+              this.options4 = roles
+            }
+          })
+        }, 200)
+    },
     submitForm (formName) {
       var that = this
       this.$refs[formName].validate((valid) => {
@@ -251,7 +290,6 @@ export default {
                 password: this.ruleForm.password
               }
             })
-          .withCredentials()
           .end( (err, res)=>{
             if (err) {
               console.log(err)
@@ -289,6 +327,9 @@ export default {
         }
       })
     }
+  },
+  mounted: function (){
+    this.remoteMethod()
   }
 }
 </script>

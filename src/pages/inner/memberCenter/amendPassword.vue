@@ -177,7 +177,6 @@ export default {
           setTimeout(() => {
             request.post(host + 'franchisee/userCenter/modifyPwd')
               .send({id: 1123339, oldPwd: this.ruleForm.pass, newPwd: this.ruleForm.checkPass})
-              .withCredentials()
               .end((err, res) => {
                 if (err) {
                   console.log(err)

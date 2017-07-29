@@ -26,14 +26,14 @@
       }
     },
     mounted: function () {
+      var type = this.$store.state.consumeDataType
       if (this.$store.state.consumeData.length === 0) {
         request
-          .post(host + 'franchisee/report/consume/day')
+          .post(host + 'franchisee/report/consume/' + type)
           .send({
             'franchiseeId': '123456',
             'userId': 'admin'
           })
-          .withCredentials()
           .end((error, res) => {
             // console.log('this is entry')
             if (error) {
@@ -49,7 +49,13 @@
                 var newArr = []
                 for (var i = 0; i < arr.length; i++) {
                   var obj = {}
-                  obj.time = moment(arr[i].time).format('YYYY-MM-DD')
+                  if(type==='day'){
+                      obj.time = moment(arr[i].time).format('YYYY年MM月DD号') 
+                  }else if(type==='week'){
+                     obj.time = moment(arr[i].time).format('YYYY年第WW周')
+                  }else{
+                     obj.time = moment(arr[i].time).format('YYYY年MM月')
+                  }
                   obj.totalBill = arr[i].totalBill
                   obj.money = arr[i].money
                   newArr.push(obj)
@@ -148,6 +154,7 @@
         })
       },
       getChartDate () {
+        console.log(this.$store.state.consumeData)
         var res = this.$store.state.consumeData.map((item) => {
           return item.time
         })
@@ -191,7 +198,6 @@
               'franchiseeId': '123456',
               'userId': 'admin'
             })
-            .withCredentials()
             .end((error, res) => {
               // console.log('this is entry')
               if (error) {
@@ -246,7 +252,6 @@
                 'end': this.$store.state.timeline.newObj.time2,
                 'type': type
               })
-              .withCredentials()
               .end((error, res) => {
                 if (error) {
                   console.log('error:', error)
