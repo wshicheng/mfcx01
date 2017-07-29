@@ -55,7 +55,7 @@
             <!--dialog 弹窗开始-->
              <el-dialog title="账号信息" :visible.sync="dialogVisible" :modal="true"
               :modal-append-to-body="false">
-              <el-form class="editAccount" :model="editAccount" :rules="editAccountRule" refs="editRuleForm">
+              <el-form class="editAccount" :model="editAccount" :rules="editAccountRule" ref="editRuleForm">
                 <el-form-item label="用户名" prop="userId" :label-width="formLabelWidth">
                   <el-input v-model="editAccount.userId" auto-complete="off"></el-input>
                 </el-form-item>
