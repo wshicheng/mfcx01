@@ -228,13 +228,20 @@ export default {
         this.loading = true;
         setTimeout(() => {
           this.loading = false
-          request.post(host + 'franchisee/account/getRole')
+          request.post(host + 'franchisee/account/getRole4Fran')
+          .send(
+            {
+              franchiseeId:123456,
+              userId:'jjjjj'
+            }
+          )
           .end((error,res)=>{
             if(error){
               console.log(error)
                this.options4 = []
             }else{
-              var roles = JSON.parse(res.text).list.map((item)=>{
+              console.log(res)
+              var roles = JSON.parse(res.text).map((item)=>{
                   var obj = {}
                   obj.value = item.roleName
                   obj.label = item.roleName
