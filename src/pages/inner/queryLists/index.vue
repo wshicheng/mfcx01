@@ -170,6 +170,7 @@ export default {
           .end((error, res) => {
             if (error) {
               console.log('error:', error)
+              this.loading2 = false
             } else {
               var arr = JSON.parse(res.text).list
               var pageNumber = JSON.parse(res.text).totalPage
@@ -235,6 +236,7 @@ export default {
             this.emptyText = ' 暂无数据'
           } else {
             var arr = JSON.parse(res.text).list
+            this.loading2 = false
             console.log(arr)
             // loading关闭
             this.loading2 = false
@@ -291,6 +293,7 @@ export default {
             .end((error, res) => {
               if (error) {
                 console.log('error:', error)
+                this.loading2 = false
               } else {
                 // console.log(JSON.parse(res.text))
                 if (JSON.parse(res.text).list.length === 0) {

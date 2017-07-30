@@ -207,22 +207,15 @@ export default [
             },
             {
                 path: '/index/logManager',
-                name: '',
-                component: logManager,
-                auth: 1900,
-                children: [{
-                        path: '',
-                        name: '登录日志',
-                        auth: 1901,
-                        component: loginlog
-                    },
-                    {
-                        path: '/index/logManager/operationLog',
-                        name: '操作日志',
-                        auth: 1902,
-                        component: operationLog
-                    }
-                ]
+                name: '登录日志',
+                component: loginlog,
+                auth: 1901
+            },
+            {
+                path: '/index/logManager/operationLog',
+                name: '操作日志',
+                auth: 1902,
+                component: operationLog
             }
         ]
     },

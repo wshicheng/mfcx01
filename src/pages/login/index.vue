@@ -230,14 +230,15 @@ export default {
             if (error) {
               console.log('error:', error)
             } else {
-              console.log(res)
-              console.log(JSON.parse(res.text).code)
               if (JSON.parse(res.text).code === 0) {
                 this.$message({
                   message: '登录成功！',
                   type: 'success'
                 })
+                var data = JSON.parse(JSON.parse(res.text).data)
+                localStorage.setItem('userinfo',JSON.parse(res.text).data)
                 this.$router.push('/index')
+                this.$store.commit('getUserInfo',data)
               } else {
                 this.$message.error('密码错误');
               }

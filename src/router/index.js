@@ -1,36 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routeConfig from './router-config.js'
-// console.log(routeConfig)
+console.error(routeConfig)
 
-// function assignRouter() {
-//     var data = '1100-1300-1301-1302'
-//     var res = data.split('-')
-//     var _index = null
-//     var obj = {}
-//     var arr = []
-//     for (var i = 0; i < res.length; i++) {
-//         routeConfig[2].children.map((item, index) => {
-//             // 如果 存在 children
-//             if (item.children) {
-//                 for (var i = 0; i < item.children.length; i++) {
-//                     for (var prop in item.children[i]) {
-//                         if (prop === res[i]) {
-//                             arr.push(item.children[i])
-//                             _index = index
-//                         }
-//                     }
-//                 }
-//                 obj.children = arr
-//             }
-//         })
-//     }
-//     var routerItem = Object.assign({}, routeConfig[2].children[_index], { obj })
-//     routeConfig[2].children.splice(_index, 1, routerItem)
-//     console.log(routeConfig[2])
+function assignRouter() {
+    var userInfo = localStorage.getItem('userinfo')
+    var authList = JSON.parse(userInfo).auth.split('-')
+    var _index = null
+    var obj = {}
+    var arr = []
+    authList.map((auth)=>{
+      routeConfig[2].children.map((item)=>{
+            if(auth*1 === item.auth){
+                arr.push(item)
+             }
+        })
+    })
+   routeConfig[2] = Object.assign({},routeConfig[2],{children:arr})
+   routeConfig.splice(2,1, routeConfig[2])
+  //console.log(routeConfig)
+}
+assignRouter()
 
-// }
-// //assignRouter()
 Vue.use(Router)
 export default new Router({
     routes: routeConfig,

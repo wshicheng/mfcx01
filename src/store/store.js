@@ -12,7 +12,8 @@ const state = {
     partnerList: [],
     partnerAdded: false,
     accountMangerData: [],
-    consumeDataType : ''
+    consumeDataType : '',
+    userInfo:null
 }
 
 const mutations = {
@@ -55,6 +56,9 @@ const mutations = {
             newoObj.cars = obj.bikeNum
             newoObj.partnerId = obj.id
             state.partnerList.push(newoObj)
+    },
+    getUserInfo(state,obj){
+        state.userInfo = obj
     }
 }
 

@@ -259,11 +259,6 @@ export default {
             type: 'warning'
           }
         ).then(() => {
-          if (this.ruleForm.role === '管理员') {
-            this.ruleForm.role = 0
-          } else{
-            this.ruleForm.role = 1
-          } 
           request.post(host + 'franchisee/account/addAccount')
            .send({
               curAcc: {
@@ -281,7 +276,7 @@ export default {
                 franchiseeId: '123456',
                 loginAuth: 0,
                 phoneNoBinding: 0,
-                role: this.ruleForm.role,
+                roleName: this.ruleForm.role,
                 state: 0,
                 name: this.ruleForm.name,
                 userId: this.ruleForm.userId,

@@ -133,7 +133,7 @@
   div.el-form-item__content div.el-input{display:inline-block;width: 192px;}
   div.el-form-item__content span.keyworkds{width: 63px;display: inline-block;text-align: right;margin-right: 10px;}
   button#operaBtn, button#joinBtn{width: 80px;
-    /* float: right; */
+    float: right;
     height: 36px;
     line-height: 11px;
     margin-right: 30px;
