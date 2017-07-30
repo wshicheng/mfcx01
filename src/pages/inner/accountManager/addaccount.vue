@@ -243,7 +243,6 @@ export default {
               if(roles.length>0){
                 this.isDisabled = false
               }
-              console.log(roles)
               this.options4 = roles
             }
           })
@@ -306,7 +305,6 @@ export default {
                    type: 'addAcount',
                    obj: this.ruleForm
                  })
-                 console.log(this.$store.state.accountMangerData)
               }
             }
           })

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routeConfig from './router-config.js'
-console.error(routeConfig)
+
 
 function assignRouter() {
     var userInfo = localStorage.getItem('userinfo')
