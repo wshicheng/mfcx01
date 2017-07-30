@@ -136,11 +136,13 @@ export default [
                 component: settlementRecord
             },
             {
+                auth: 1402,    
                 path: '/index/applyaccount',
                 name: '申请结算(单月待结算)',
                 component: applyaccount
             },
             {
+                auth: 1402,
                 path: '/index/applysubmitted/:id',
                 name: '申请结算(结算状态)',
                 component: applysubmitted
@@ -220,6 +222,7 @@ export default [
         ]
     },
     {
+        auth: 1200,
         path: '/carUseDetail',
         name: '车辆明细',
         component: carUseDetail
